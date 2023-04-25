@@ -1,34 +1,42 @@
-import React from 'react'
+import React from 'react';
+import { useState } from 'react';
 // import { uuid } from 'uuidv4';
-   const Login = () => {
-   const [passwordData,setPasswordData] = React.useState([{password:null}]);
-   const [emailData,setEmailData] = React.useState([{email:null}]);
+  
+const Login = () => {
+  const[password,setPassword] = useState('');
+  const[email,setEmail] = useState('');
 
-   const handleClick = ()=>{
-  setPasswordData([...{password:passwordData}]);
-  setEmailData([...{email:emailData}])
+const passwordHandler = (e)=>{
+  setPassword(e.target.value)
+    
+    console.log(e.target.value)
+  
 }
+const emailHandler = (e)=>{
+  setEmail(e.target.value)
+  console.log(e.target.value)
 
-   const data =
-    {   
-      "password": "password",
-   "email":"email"}
+  }
+
+
  async function loginFetch(){
+    
   try{
+    let info = {   
+      "password": password,
+   "email":email}
+
     const result = await fetch("https://first-node-js-app-r.herokuapp.com/api/auth/login",{
 method:"POST",
 headers:{
    
      'Content-Type': 'application/json' 
 },
-body: JSON.stringify(data)
+body: JSON.stringify(info)
 })
 const data = await result.json();
 console.log(data)
-// localStorage.setItem('access',data.access);
-// localStorage.setItem('refresh',data.refresh)
-// console.log(localStorage);
-// "olena1708@gmail.com"   17Aug2023!!
+
   }
   catch(erorr){
     console.log(erorr.message)
@@ -41,10 +49,17 @@ loginFetch()
   return (
   <form className='login-form'>
     <h3>Login</h3>
-    <label for = "password">password <input type = "password" onChange={(e)=>setPasswordData(e.target.value)} value = {passwordData}/></label>
-    <label for = "email">email<input type = "email" onChange={(e)=>setEmailData(e.target.value)} value = {emailData}/></label>
-    <button onClick = {handleClick}>Submit</button>
+    <label >password <input type = "password" name = "password" onChange={passwordHandler} value = {password}/></label>
+    <label>email<input type = "email" name = "email" onChange={emailHandler} value = {email}/></label>
+    <button onClick = {()=>loginFetch()}>Submit</button>
   </form>
   )
 }
-export default Login
+export default Login;
+
+
+// localStorage.setItem('access',data.access);
+// localStorage.setItem('refresh',data.refresh)
+// console.log(localStorage);
+//email "olena1708@gmail.com" 
+  //password 17Aug2023!!
