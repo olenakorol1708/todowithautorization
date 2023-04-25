@@ -4,6 +4,10 @@ import React from 'react'
    const [passwordData,setPasswordData] = React.useState([{password:null}]);
    const [emailData,setEmailData] = React.useState([{email:null}]);
 
+   const handleClick = ()=>{
+  setPasswordData([...{password:passwordData}]);
+  setEmailData([...{email:emailData}])
+}
 
    const data =
     {   
@@ -39,7 +43,7 @@ loginFetch()
     <h3>Login</h3>
     <label for = "password">password <input type = "password" onChange={(e)=>setPasswordData(e.target.value)} value = {passwordData}/></label>
     <label for = "email">email<input type = "email" onChange={(e)=>setEmailData(e.target.value)} value = {emailData}/></label>
-    <button>Submit</button>
+    <button onClick = {handleClick}>Submit</button>
   </form>
   )
 }
